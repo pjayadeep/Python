@@ -28,7 +28,6 @@ def cpuData(interval, type = 'cpu'):
 
 
 def diskData(interval, type = ''):
-#def getData(interval, type = ''):
         item = {}
         fd = getFd('/proc/diskstats')
         for line in fd:
