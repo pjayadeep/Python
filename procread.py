@@ -7,24 +7,34 @@ def getFd(file) :
         fd =  open(file,'rb')
         return fd
 
-def schedCollection(interval, count):
-
-        prev = getData(interval)
+def schedCollection(interval, count, collection, printF):
+        prev = collection(interval)
         for c in range(0,count):
                 sleep(interval)
-                next = getData(interval)
+                next = collection(interval)
                 diff = calcDiff(prev, next)
-                printDiff(diff)
+                printF(diff)
                 prev = next
 
 
-def getData(interval, type = 'cpu'):
+def cpuData(interval, type = 'cpu'):
         item = {}
         fd = getFd('/proc/stat')
         for line in fd:
                 fields = line.split()
                 if fields[0].startswith(type):
-                	item[fields[0]] =[int(i)/interval for i in fields[1:] ]
+               		item[fields[0]] =[int(i)/interval for i in fields[1:] ]
+        return item
+
+
+def diskData(interval, type = ''):
+#def getData(interval, type = ''):
+        item = {}
+        fd = getFd('/proc/diskstats')
+        for line in fd:
+                fields = line.split()
+                if fields[2].startswith(type):
+               		item[fields[2]] =[int(i)/interval for i in fields[3:] ]
         return item
 
 def calcDiff(prev,next):
@@ -37,8 +47,15 @@ def calcDiff(prev,next):
                         i = i+1
         return diff
 
-def printDiff(it):
+def printCpu(it):
 	colNames = ['cpu', 'usr', 'nice', 'sys', 'idle', 'iowait', 'irq', 'softirq', 'steal' ,'guest', '???']
+	printDiff(it,colNames)
+
+def printDisk(it):
+	colNames = ['Device', 'rrqm/s' ,  'wrqm/s',     'r/s',     'w/s',   'rsec/s',   'wsec/s', 'avgrq-sz', 'avgqu-sz',  'await',  'svctm',  '%util' ]
+	printDiff(it,colNames)
+
+def printDiff(it,colNames):
 	for each in colNames:
 		print each.rjust(6),
 	print 
@@ -50,6 +67,6 @@ def printDiff(it):
 		print 
 
 
-
-schedCollection(1,5)
+schedCollection(1,1,cpuData,printCpu)
+schedCollection(1,1,diskData,printDisk)
 
