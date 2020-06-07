@@ -38,6 +38,7 @@ class stat :
 #####
 
 class Coin:
+    """Coin toss object"""
     coin = ["H", "T"]    
     freq = {"H":0, "T":0}
     
@@ -58,6 +59,8 @@ class Coin:
 
 
 class Person:
+    """People with 100Rs till they trade"""
+
     savings = 0
     trades = 0
     wins = 0
@@ -67,6 +70,8 @@ class Person:
         self.savings = 100
         
     def trade(self, coin,guess,partner):
+        """Trade with another partner, win - +1 rs, loss -1rs."""
+
         coin.toss()
         if coin.won(guess) :
             self.savings += 1
@@ -126,12 +131,14 @@ def freqDist(list):
     freq = {p:list.count(p) for p in set(list)}
     values = [money for money,frequency in freq.items() ]
 
-    #print histogram
     def histogram(freq):
-        for k,v in freq.items():
-            print k,v*'*', v
+        keys = freq.keys()
+        keys.sort() 
 
-    #histogram(freq) 
+        for  k in keys:
+            print k,freq[k]*'*', freq[k]
+
+    histogram(freq) 
     return dict(zip(["mean", "stddev", "min", "max"], \
             [stat().mean(values), stat().stddev(values),min(values),max(values)]))
         
