@@ -1,8 +1,11 @@
+
 # Simulation of Jordan Henderson's analogy of natural classification
 #
 
 import random
 from collections import Counter
+from time import time
+
 
 # statistics code from stackoverflow
 #
@@ -43,8 +46,7 @@ class Coin:
                         
     def toss(self):
         self.value =  random.choice(self.coin)
-        #self.value = "T"
-        self.freq[self.value] = self.freq[self.value]+1
+        self.freq[self.value] += 1
         return self.value
 
     def hort(self):
@@ -57,17 +59,25 @@ class Coin:
 
 class Person:
     savings = 0
+    trades = 0
+    wins = 0
+    losses = 0
+
     def __init__(self):
         self.savings = 100
         
     def trade(self, coin,guess,partner):
         coin.toss()
         if coin.won(guess) :
-            self.savings = self.savings + 1
-            partner.savings = partner.savings -1
+            self.savings += 1
+            self.wins += 1
+            partner.savings -= 1
         else :
-            self.savings = self.savings -1
-            partner.savings = partner.savings + 1
+            self.savings -= 1
+            partner.savings +=1
+            self.losses += 1
+        self.trades = self.trades+1
+        
     def balance(self):
         return self.savings
     
@@ -89,15 +99,31 @@ def startTrade(peopleCount, tradeCount):
 
             guess = coin.toss()
             eachPerson.trade(coin,guess,partner)
-    return people
 
+    def winlossStats():
+        wins = [ person.wins for person in people]
+        print max(wins), min(wins), stat().mean(wins), stat().stddev(wins)
+        print wins, sum(wins) 
+        print
+        losses = [ person.losses for person in people]
+        print losses, sum(losses)
+        print float(sum(wins))/ sum(losses) 
 
-def freqDist(people):
-    
+    def verifyTrades():
+        trades = [ person.trades for person in people]
+        print trades, sum(trades)
+
+    #winlossStats()
+    #verifyTrades()
+
     savingsList = [p.savings for p in people]
+    return savingsList
 
-    freq = Counter(savingsList)
-    freq = {p:savingsList.count(p) for p in set(savingsList)}
+
+def freqDist(list):
+    
+    #freq = Counter(list)
+    freq = {p:list.count(p) for p in set(list)}
     values = [money for money,frequency in freq.items() ]
 
     #print histogram
@@ -111,11 +137,13 @@ def freqDist(people):
         
 if __name__ == "__main__":
 
-    print freqDist(startTrade(50,1000))
-    exit()
+    # #people, #trades
+    data = [(100,10), (100,100), (100,1000), (100,10000), ]
+    data = [(100,10)]
 
-    print freqDist(startTrade(100,10))
-    print freqDist(startTrade(100,100))
-    
-    print freqDist(startTrade(100,200))
-    print freqDist(startTrade(100,300))
+    for val in data:
+        start_time = time()
+        print freqDist(startTrade(val[0],val[1]))
+        print("--- %s seconds ---" % (time() - start_time))
+
+    exit()
