@@ -1,6 +1,36 @@
 
 # Simulation of Jordan Henderson's analogy of natural classification
 #
+#Probllem:
+#
+#   Let us say the the probability of a head or tail during a coin toss is 
+# equal (50 percent). 
+#
+# Let us also start a game in which every one has 100 rupees. If they all 
+# trade with each other for a long time based on coin toss (1 rupee gain 
+# for  head and 1 rupee loss for tail), will some people end up richer ? 
+# Will some people end up with nothing ? Or will they end up with somewhat 
+# equally (!around where they started ).
+    
+# This was a debate between Ravichandran and Dr Vishwanathan. Dr Vishwanathan
+# apparently checked with a mathematics professor, who said that at the
+# end of the trials, everyone will have the same amount of money, which is NOT
+# correct. Though the distribution appears equal due to the 50% probabilty of
+# head/tails, the distribution is in fact normal one.
+#
+# There are 2 random variables involved, one that of coin toss whose probaility
+# is 50%, and another of each person making at least half the right 
+# calls out of it to get a 50% win/lose chance, which is (nC(n/2) / 2^n) 
+# which drops # quite fast with large n. This causes a standard 
+# distribution of wealth among the people.
+
+# This is not so apparent from the way the quesiton is posed making people
+# believe the chances of each individual winning/losing is 50%.
+#
+# But RC's argument of an 80/20 distribution is not correct either, it is
+# just a normal distribution.
+
+# Authorj - Jayadeep Purshothaman p_jayadeep@yahoo.com
 
 import random
 from collections import Counter
@@ -138,7 +168,7 @@ def freqDist(list):
         for  k in keys:
             print k,freq[k]*'*', freq[k]
 
-    histogram(freq) 
+    #histogram(freq) 
     return dict(zip(["mean", "stddev", "min", "max"], \
             [stat().mean(values), stat().stddev(values),min(values),max(values)]))
         
@@ -146,7 +176,7 @@ if __name__ == "__main__":
 
     # #people, #trades
     data = [(100,10), (100,100), (100,1000), (100,10000), ]
-    data = [(100,10)]
+    #data = [(2,10000)]
 
     for val in data:
         start_time = time()
