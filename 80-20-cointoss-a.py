@@ -76,7 +76,7 @@ class Person:
             self.savings -= 1
             partner.savings +=1
             self.losses += 1
-        self.trades = self.trades+1
+        self.trades += 1
         
     def balance(self):
         return self.savings
