@@ -132,25 +132,25 @@ def startTrade(peopleCount, tradeCount):
 
             guess = coin.toss()
             eachPerson.trade(coin,guess,partner)
-
-    def winlossStats(people):
-        wins = [ person.wins for person in people]
-        print max(wins), min(wins), stat().mean(wins), stat().stddev(wins)
-        print wins, sum(wins) 
-        print
-        losses = [ person.losses for person in people]
-        print losses, sum(losses)
-        print float(sum(wins))/ sum(losses) 
-
-    def verifyTrades(people):
-        trades = [ person.trades for person in people]
-        print trades, sum(trades)
-
     #winlossStats(people)
     #verifyTrades(people)
 
     savingsList = [p.savings for p in people]
     return savingsList
+
+
+def winlossStats(people):
+    wins = [ person.wins for person in people]
+    print max(wins), min(wins), stat().mean(wins), stat().stddev(wins)
+    print wins, sum(wins) 
+    print
+    losses = [ person.losses for person in people]
+    print losses, sum(losses)
+    print float(sum(wins))/ sum(losses) 
+
+def verifyTrades(people):
+    trades = [ person.trades for person in people]
+    print trades, sum(trades)
 
 
 def freqDist(list):
@@ -162,7 +162,6 @@ def freqDist(list):
     def histogram(freq):
         keys = freq.keys()
         keys.sort() 
-
         for  k in keys:
             print k,freq[k]*'*', freq[k]
 
