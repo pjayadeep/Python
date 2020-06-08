@@ -150,7 +150,7 @@ def winlossStats(people):
 
 def verifyTrades(people):
     trades = [ person.trades for person in people]
-    print trades, sum(trades)
+    print( trades, sum(trades))
 
 
 def freqDist(list):
