@@ -141,12 +141,12 @@ def startTrade(peopleCount, tradeCount):
 
 def winlossStats(people):
     wins = [ person.wins for person in people]
-    print max(wins), min(wins), stat().mean(wins), stat().stddev(wins)
-    print wins, sum(wins) 
-    print
+    print( max(wins), min(wins), stat().mean(wins), stat().stddev(wins))
+    print( wins, sum(wins) )
+    print("")
     losses = [ person.losses for person in people]
-    print losses, sum(losses)
-    print float(sum(wins))/ sum(losses) 
+    print( losses, sum(losses))
+    print( float(sum(wins))/ sum(losses) )
 
 def verifyTrades(people):
     trades = [ person.trades for person in people]
@@ -163,7 +163,7 @@ def freqDist(list):
         keys = freq.keys()
         keys.sort() 
         for  k in keys:
-            print k,freq[k]*'*', freq[k]
+            print( k,freq[k]*'*', freq[k])
 
     #histogram(freq) 
     return dict(zip(["mean", "stddev", "min", "max"], \
@@ -177,9 +177,9 @@ if __name__ == "__main__":
 
     for peopleCount, tradeCount in data:
         start_time = time()
-        print  peopleCount,'people',  tradeCount*peopleCount,'trades' 
-        print freqDist(startTrade(peopleCount,tradeCount))
+        print  (peopleCount,'people',  tradeCount*peopleCount,'trades' )
+        print (freqDist(startTrade(peopleCount,tradeCount)))
         print("--- %s seconds ---" % (time() - start_time))
-        print
+        print("")
 
     exit()
