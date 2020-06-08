@@ -17,6 +17,7 @@
 # end of the trials, everyone will have the same amount of money, which is NOT
 # correct. Though the distribution appears equal due to the 50% probabilty of
 # head/tails, the distribution is in fact normal one.
+# (see https://www.youtube.com/watch?v=zwpnmMCpKyU)
 #
 # There are 2 random variables involved, one that of coin toss whose probaility
 # is 50%, and another of each person making at least half the right 
@@ -120,9 +121,6 @@ class Person:
 def startTrade(peopleCount, tradeCount):
     coin = Coin()
 
-    print peopleCount,'people',  tradeCount*peopleCount,'trades' 
-    print
-
     people = [Person() for i in range(peopleCount)]
 
     for count  in range(tradeCount):
@@ -135,7 +133,7 @@ def startTrade(peopleCount, tradeCount):
             guess = coin.toss()
             eachPerson.trade(coin,guess,partner)
 
-    def winlossStats():
+    def winlossStats(people):
         wins = [ person.wins for person in people]
         print max(wins), min(wins), stat().mean(wins), stat().stddev(wins)
         print wins, sum(wins) 
@@ -144,12 +142,12 @@ def startTrade(peopleCount, tradeCount):
         print losses, sum(losses)
         print float(sum(wins))/ sum(losses) 
 
-    def verifyTrades():
+    def verifyTrades(people):
         trades = [ person.trades for person in people]
         print trades, sum(trades)
 
-    #winlossStats()
-    #verifyTrades()
+    #winlossStats(people)
+    #verifyTrades(people)
 
     savingsList = [p.savings for p in people]
     return savingsList
@@ -176,11 +174,13 @@ if __name__ == "__main__":
 
     # #people, #trades
     data = [(100,10), (100,100), (100,1000), (100,10000), ]
-    #data = [(2,10000)]
+    #data = [(100,10)]
 
-    for val in data:
+    for peopleCount, tradeCount in data:
         start_time = time()
-        print freqDist(startTrade(val[0],val[1]))
+        print  peopleCount,'people',  tradeCount*peopleCount,'trades' 
+        print freqDist(startTrade(peopleCount,tradeCount))
         print("--- %s seconds ---" % (time() - start_time))
+        print
 
     exit()
