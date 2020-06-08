@@ -118,24 +118,35 @@ class Person:
         return self.savings
     
 
-def startTrade(peopleCount, tradeCount):
+def getPartner(people, eachPerson):
+    while True:
+        partner = random.choice(people)
+        if partner.savings <= 0:
+            continue
+        if partner != eachPerson:
+            break
+    return partner
+
+def trade(people):
     coin = Coin()
-
-    people = [Person() for i in range(peopleCount)]
-
-    for count  in range(tradeCount):
-        for eachPerson in people:
-            while True:
-                partner = random.choice(people)
-                if partner != eachPerson:
-                    break
-
+    for eachPerson in people:
+        if  eachPerson.savings > 0:
+            partner = getPartner(people,eachPerson)
             guess = coin.toss()
             eachPerson.trade(coin,guess,partner)
+
+
+def startTrade(peopleCount, tradeCount):
+
+    people = [Person() for i in range(peopleCount)]
+    for count  in range(tradeCount):
+        trade(people)
     #winlossStats(people)
     #verifyTrades(people)
 
     savingsList = [p.savings for p in people]
+    #print savingsList
+
     return savingsList
 
 
@@ -172,8 +183,8 @@ def freqDist(list):
 if __name__ == "__main__":
 
     # #people, #trades
+    data = [(10,10), (10,100), (10,10000)]
     data = [(100,10), (100,100), (100,1000), (100,10000), ]
-    #data = [(100,10)]
 
     for peopleCount, tradeCount in data:
         start_time = time()
