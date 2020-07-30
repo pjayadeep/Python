@@ -55,13 +55,14 @@ for i in range(1000):
 
 def montyHall(changeChoice=0):
     winloss = {"win":0, "loss":0}
-    for i in range(100):
+    for i in range(1000):
         if  play(changeChoice).reveal() == "car" :
             winloss["win"] = winloss["win"] + 1
         else:
             winloss["loss"] = winloss["loss"] + 1
     return winloss
 
+print
 print 'No Switch ', montyHall(0)
-print 'Switch', montyHall(1)
+print 'With Switch', montyHall(1)
 
