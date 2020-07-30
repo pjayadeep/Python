@@ -1,3 +1,4 @@
+
 import random
 
 # The door hides a car or goat.
@@ -50,14 +51,17 @@ stats =  {"car":0, "goatA":0, "goatB":0}
 for i in range(1000):
     has = pickAbox(doors).reveal()
     stats[has] = stats[has] + 1
-print stats
 
 
-winloss = {"win":0, "loss":0}
-for i in range(100):
-    if  play(1).reveal() == "car" :
-        winloss["win"] = winloss["win"] + 1
-    else:
-        winloss["loss"] = winloss["loss"] + 1
-print winloss
+def montyHall(changeChoice=0):
+    winloss = {"win":0, "loss":0}
+    for i in range(100):
+        if  play(changeChoice).reveal() == "car" :
+            winloss["win"] = winloss["win"] + 1
+        else:
+            winloss["loss"] = winloss["loss"] + 1
+    return winloss
+
+print 'No Switch ', montyHall(0)
+print 'Switch', montyHall(1)
 
