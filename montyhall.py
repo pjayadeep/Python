@@ -22,8 +22,7 @@ def play(changeChoice=0):
 
     if changeChoice:
         doorSelection = {car:random.choice([goatB, goatC]), goatC:goatB, goatB:goatC}
-        goatDoor = doorSelection[selection]
-        doors.remove(goatDoor)
+        doors.remove(doorSelection[selection])
         doors.remove(selection)
         selection =  doors[0]
 
