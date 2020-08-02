@@ -12,16 +12,14 @@ car = door("car")
 goatB = door("goatA")
 goatC = door("goatB")
 
-def pickAdoor(doors):
-    return random.choice(doors)
-
 def play(changeChoice=0):
 
     doors = [car, goatB, goatC]
-    selection  = pickAdoor(doors)
+    selection  = random.choice(doors)
 
     if changeChoice:
-        doorSelection = {car:random.choice([goatB, goatC]), goatC:goatB, goatB:goatC}
+        doorSelection = {car:random.choice([goatB, goatC]), 
+                goatC:goatB, goatB:goatC}
         doors.remove(doorSelection[selection])
         doors.remove(selection)
         selection =  doors[0]
