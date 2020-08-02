@@ -1,4 +1,3 @@
-
 import random
 
 # The door hides a car or goat.
@@ -20,33 +19,24 @@ def play(changeChoice=0):
 
     doors = [car, goatB, goatC]
     selection  = pickAdoor(doors)
-    goatDoor = showDoor(selection)
 
     if changeChoice:
+        doorSelection = {car:random.choice([goatB, goatC]), goatC:goatB, goatB:goatC}
+        goatDoor = doorSelection[selection]
         doors.remove(goatDoor)
         doors.remove(selection)
         selection =  doors[0]
 
     return selection
 
-# Monty Hall logic
-#
-def showDoor(selection ):
-
-    if selection == car: #correct choice
-        return  random.choice([goatB, goatC])
-    elif  selection == goatB:
-        return  goatC
-    else :
-        return goatB
 
 def montyHall(changeChoice=0):
     winloss = {"win":0, "loss":0}
     for i in range(1000):
         if  play(changeChoice).reveal() == "car" :
-            winloss["win"] = winloss["win"] + 1
+            winloss["win"] += 1
         else:
-            winloss["loss"] = winloss["loss"] + 1
+            winloss["loss"] += 1
     return winloss
 
 print
