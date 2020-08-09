@@ -25,8 +25,6 @@ class Coin:
     def won(self, guess):
         return self.value == guess
 
-
-
 def runSample(coin, count):
 
     runcount = maxcount = 1
@@ -50,24 +48,18 @@ def histogram(freq):
         if freq[k] > 0:
             print( k,freq[k]*'*', freq[k])
 
-tossCount = 250
-
-def runIteration(iterCount):
-    stats = { }
-    for x in range(iterCount):
-        stats[x] = 0
-    for i in range(iterCount):
+def runIteration(iterCount,tossCount):
+    stats = {x:0 for x in xrange(iterCount)}
+    for i in xrange(iterCount):
         stats[runSample(Coin(), tossCount)] += 1
-
-    #print [ (x,stats[x]) for x in stats if  stats[x] > 0]
     #histogram(stats)
-
     print sum ([ (x*stats[x]) for x in stats if  stats[x] > 0]) *1.0  /iterCount
     
 
-runIteration(1000)
-exit()
+runIteration(1000, 250)
 
+exit()
+runIteration(10, 4)
 print runSample(Coin(), 1)
 print runSample(Coin(), 2)
 print runSample(Coin(), 10)
