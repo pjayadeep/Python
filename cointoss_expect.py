@@ -11,6 +11,7 @@ class Coin:
     
     def __init__(self):
         self.freq = {hort:0 for hort in self.coin}
+        self.hist=[]
                         
     def toss(self):
         self.value =  random.choice(self.coin)
@@ -25,12 +26,10 @@ class Coin:
         return self.value == guess
 
 
-def runSample(count):
 
-    coin = Coin()
+def runSample(coin, count):
 
-    runs = []
-    runcount = 1
+    runcount = maxcount = 1
     previous = coin.toss()
 
     for i in range(count - 1):
@@ -38,14 +37,15 @@ def runSample(count):
         if result == previous:
             runcount += 1
         else:
-            runs.append(runcount)
+            if runcount > maxcount:
+                maxcount = runcount
             runcount = 1
         previous = result
-
-    runs.append(runcount)
+        if runcount > maxcount:
+            maxcount = runcount
 
     #print coin.hist
-    return  max(runs)
+    return  maxcount
 
 def histogram(freq):
     keys = freq.keys()
@@ -61,13 +61,17 @@ def runIteration(iterCount):
     for x in range(iterCount):
         stats[x] = 0
     for i in range(iterCount):
-        stats[runSample(tossCount)] += 1
+        stats[runSample(Coin(), tossCount)] += 1
 
     #print [ (x,stats[x]) for x in stats if  stats[x] > 0]
     #histogram(stats)
+
     print sum ([ (x*stats[x]) for x in stats if  stats[x] > 0]) *1.0  /iterCount
     
 
-runIteration(1000)
+runIteration(10000)
+exit()
 
-#print runSample(1)
+print runSample(Coin(), 1)
+print runSample(Coin(), 2)
+print runSample(Coin(), 10)
