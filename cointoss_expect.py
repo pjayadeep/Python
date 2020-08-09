@@ -37,14 +37,10 @@ def runSample(coin, count):
         if result == previous:
             runcount += 1
         else:
-            if runcount > maxcount:
-                maxcount = runcount
             runcount = 1
-        previous = result
         if runcount > maxcount:
             maxcount = runcount
-
-    #print coin.hist
+        previous = result
     return  maxcount
 
 def histogram(freq):
@@ -69,7 +65,7 @@ def runIteration(iterCount):
     print sum ([ (x*stats[x]) for x in stats if  stats[x] > 0]) *1.0  /iterCount
     
 
-runIteration(10000)
+runIteration(1000)
 exit()
 
 print runSample(Coin(), 1)
