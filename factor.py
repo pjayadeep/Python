@@ -1,6 +1,8 @@
 
 from  math import ceil,sqrt
 
+domain=1971
+
 def sums(n):
     #print "number=", n
     list = []
@@ -24,49 +26,43 @@ def fact_sums(sum):
     #print list
 
     for  m in list:
-        factors_list =  [(x,y) for (x,y) in factors(m) if x+y<101]
+        factors_list =  [(x,y) for (x,y) in factors(m) if x+y<domain]
         if len(factors_list) == 1:
-            #print factors_list
-            #print [x+y for (x,y) in factors_list] # if x <=20 and y <= 20]
             return True
-
     return False
 
-#for n in  [x*y for (x,y) in sums(57)]:
-    #print factors(n)
-
-
-l = []
-
 def nonUniq(nos):
+    l = []
     for i in nos:
         if not fact_sums(i):
             l.append(i)
     return l
 
-nU =  nonUniq(range(5,101))
-print "potential sums = ", nU
-setB = set(nU)
-for n in  nU:
-    freq_list = []
-    #print sums(n)
-    #for i in  [x*y for (x,y) in sums(n)]:
-    freq = {}
-    freq[1] = 0
-    for (a,b) in sums(n):
-        i = a*b
-        #print factors(i)
-        adds =  [x+y for (x,y) in factors(i)]
-        #print(adds), '(', i, ')', factors(i)
-        lst =  ([(x,y) for (x,y) in factors(i) if x+y in nU] )
-        #print lst
-        freq_list.append((len(lst), (a,b)))
-    #print freq_list
+def find_xy(nU):
+    answers = []
+    for n in  nU:
+        freq_list = []
+        freq = {}
+        freq[1] = 0
 
-    for f,item in freq_list:
-        if f == 1:
-            freq[1] += 1
-            ans = item
-    if freq[1] == 1:
-        print 'Answer =', ans
-        
+        for (a,b) in sums(n):
+            i = a*b
+            adds =  [x+y for (x,y) in factors(i)]
+            lst =  ([(x,y) for (x,y) in factors(i) if x+y in nU] )
+            #print lst
+            freq_list.append((len(lst), (a,b)))
+
+        for f,item in freq_list:
+            if f == 1:
+                freq[1] += 1
+                ans = item
+        if freq[1] == 1:
+            print 'Answer =', ans
+            answers.append(ans)
+        #print
+    return answers
+            
+
+nU =  nonUniq(range(5,domain))
+print "potential sums = ", nU
+print find_xy(nU)
